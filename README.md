@@ -61,45 +61,6 @@ En ciencia de datos siempre te toparás con datasets incompletos que tendrás qu
 ### Cierre de curso
 
 - Continúa aprendiendo sobre el manejo de valores faltantes - [code021.ipynb](codes/code021.ipynb), [code021.html](codes/html/code021.html)
-
 - Examen 
-
-- - [code022.ipynb](codes/code022.ipynb), [code022.html](codes/html/code022.html)
-
-- - [code023.ipynb](codes/code023.ipynb), [code023.html](codes/html/code023.html)
-
-- - [code024.ipynb](codes/code024.ipynb), [code024.html](codes/html/code024.html)
-
-- - [code025.ipynb](codes/code025.ipynb), [code025.html](codes/html/code025.html)
-
-- - [code026.ipynb](codes/code026.ipynb), [code026.html](codes/html/code026.html)
-
-- - [code027.ipynb](codes/code027.ipynb), [code027.html](codes/html/code027.html)
-
-- - [code028.ipynb](codes/code028.ipynb), [code028.html](codes/html/code028.html)
-
-- - [code029.ipynb](codes/code029.ipynb), [code029.html](codes/html/code029.html)
-
-- - [code030.ipynb](codes/code030.ipynb), [code030.html](codes/html/code030.html)
-
-- - [code031.ipynb](codes/code031.ipynb), [code031.html](codes/html/code031.html)
-
-- - [code032.ipynb](codes/code032.ipynb), [code032.html](codes/html/code032.html)
-
-- - [code033.ipynb](codes/code033.ipynb), [code033.html](codes/html/code033.html)
-
-- - [code034.ipynb](codes/code034.ipynb), [code034.html](codes/html/code034.html)
-
-- - [code035.ipynb](codes/code035.ipynb), [code035.html](codes/html/code035.html)
-
-- - [code036.ipynb](codes/code036.ipynb), [code036.html](codes/html/code036.html)
-
-- - [code037.ipynb](codes/code037.ipynb), [code037.html](codes/html/code037.html)
-
-- - [code038.ipynb](codes/code038.ipynb), [code038.html](codes/html/code038.html)
-
-- - [code039.ipynb](codes/code039.ipynb), [code039.html](codes/html/code039.html)
-
-- - [code040.ipynb](codes/code040.ipynb), [code040.html](codes/html/code040.html)
 
 <br />
