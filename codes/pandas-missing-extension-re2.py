@@ -154,9 +154,9 @@ class MissingMethods:
 
         plot_range = range(1, len(df.index) + 1)
 
-        plt.hlines(y=plot_range, xmin=0, xmax=df.n_missing, color="black")
+        plt.hlines(y=plot_range, xmin=0, xmax=df.n_missing.values, color="black")  # Convierte df.n_missing en un array de NumPy
 
-        plt.plot(df.n_missing, plot_range, "o", color="black")
+        plt.plot(np.array(df.n_missing), plot_range, 'o', color="black")
 
         plt.yticks(plot_range, df.variable)
 
@@ -164,6 +164,8 @@ class MissingMethods:
 
         plt.xlabel("Number missing")
         plt.ylabel("Variable")
+
+        plt.show()
 
     def missing_case_plot(self):
 
