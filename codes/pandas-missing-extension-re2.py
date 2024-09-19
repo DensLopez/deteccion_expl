@@ -11,6 +11,8 @@ except AttributeError:
     pass
 
 @pd.api.extensions.register_dataframe_accessor("missing")
+@pd.api.extensions.register_series_accessor("missing")
+
 class MissingMethods:
     def __init__(self, pandas_obj: pd.DataFrame):
         self._obj = pandas_obj
@@ -216,66 +218,70 @@ class MissingMethods:
             .value_counts(variables)
             .pipe(lambda df: upsetplot.plot(df, **kwargs))
         )
-    
-    def missing_scatterplot(
-        self,
-        x: str,
-        y: str,
-        proportion_bellow: float= 0.10,
-        jitter: float= 0.75,
-        seed: int= 42
-    ):
-        return (
-            self._obj.
-            select_dtypes(exclude=object)
-            .pipe(
-                lambda df: (
-                    df[df.columns[df.isna().any()]]
-                )
-            )
-            .missing.bind_shadow_matrix(true_string= True, false_string= False)
-            .apply(
-                lambda column: column if "_NA" in column.name else MissingMethods.column_fill_with_dummies(column, proportion_bellow= proportion_bellow, jitter= jitter, seed= seed)
-            )
-            .assign(
-                nullity= lambda df: df[x + "_NA"] | df[y + "_NA"]
-            )
-            .pipe(
-                lambda df: (
-                    sns.scatterplot(
-                        data= df,
-                        x= x,
-                        y= y,
-                        hue= "nullity"
-                    )
-                )
-            )
-        )
-    
-    @classmethod
+
     def column_fill_with_dummies(
-        cls,
-        column: pd.Series,
-        proportion_bellow: float= 0.10,
-        jitter: float= 0.75,
-        seed: int= 42
+        self,
+        proportion_below: float = 0.10,
+        jitter: float = 0.075,
+        seed: int = 42
     ) -> pd.Series:
-        
-        column = column.copy(deep=True)
+        """Fills a column with missing values with dummies, to be used in a scatterplot"""
+
+        # We're going to create a new series for the dummy data
 
         # Extract values metadata
-        missing_mask = column.isna()
+        missing_mask = self._obj.isna()
         number_missing_values = missing_mask.sum()
-        column_range = column.max() - column.min()
+        column_range = self._obj.max() - self._obj.min()
 
         # Shift data
-        column_shift = column.min() - column.min() * proportion_bellow
+        column_shift = self._obj.min() - self._obj.min() * proportion_below
 
         # Create the "jitter" (noise) to be added around the points
         np.random.seed(seed)
         column_jitter = (np.random.rand(number_missing_values) - 2) * column_range * jitter
 
-        # Save new dummy data
-        column[missing_mask] = column_shift + column_jitter
+        # Create new series for dummy data with the same index as the missing values in the original series
+        dummy_data = pd.Series(column_shift + column_jitter, index=self._obj[missing_mask].index)
 
-        return column
+        # Return a series combining original and dummy data
+        return self._obj.fillna(dummy_data)
+    
+    def missing_scatterplot(
+        self,
+        x:str, 
+        y:str, 
+        **kwargs
+        ):
+        """Recieves a DataFrame and 2 strings with the names of the columns to be used as x and y. Plots a nullity scatterplot"""
+
+            
+        return(
+            self._obj.select_dtypes(
+                    exclude='category'
+                )
+                .pipe(
+                    lambda df : df[df.columns[df.isna().any()]]
+                )
+                .missing.bind_shadow_matrix(true_string=True, false_string=False)
+                .apply(
+                    lambda column: column if "_NA" in column.name else column.missing.column_fill_with_dummies(
+                        proportion_below=0.05, 
+                        jitter=0.075)
+                )
+                .assign(
+                    nullity = lambda df:df[x+'_NA'] | df[y+'_NA']
+                )
+                .pipe(
+                    lambda df:(
+                        sns.scatterplot(
+                            data=df, 
+                            x=x,
+                            y=y,
+                            hue='nullity'
+                        )
+                    )
+                )
+        )
+    
+    
