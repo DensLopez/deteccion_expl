@@ -61,6 +61,6 @@ En ciencia de datos siempre te toparás con datasets incompletos que tendrás qu
 ### Cierre de curso
 
 - Continúa aprendiendo sobre el manejo de valores faltantes - [code021.ipynb](codes/code021.ipynb), [code021.html](codes/html/code021.html)
-- Examen 
+- Examen - [Examen](codes/Examen.pdf)
 
 <br />
